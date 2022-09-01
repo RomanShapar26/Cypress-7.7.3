@@ -1,64 +1,88 @@
 let page;
-afterEach(async () => {
-  await page.close();
-});
-beforeEach(async () => {
-  page = await browser.newPage();
-  await page.goto("https://github.com/team");
-});
-describe("Github page tests", () => {
-  test("The h1 header content", async () => {
-    await page.setDefaultTimeout(3000);
-    const firstLink = await page.$("header div div a");
-    await firstLink.click();
-    await page.waitForSelector("h1");
-    const title2 = await page.title();
-    expect(title2).toEqual('GitHub: Where the world builds software · GitHub');
-  });
-  test("The first link attribute", async () => {
-    await page.setDefaultTimeout(2000);
-    const actual = await page.$eval("a", (link) => link.getAttribute("href"));
-    expect(actual).toEqual("#start-of-content");
-  });
-  test("The page contains Sign in button", async () => {
-    await page.setDefaultTimeout(2000);
-    const btnSelector = ".btn-large-mktg.btn-mktg";
-    await page.waitForSelector(btnSelector, {
-      visible: true,
-    });
-    const actual = await page.$eval(btnSelector, (link) => link.textContent);
-    expect(actual).toContain("Sign up for free");
-  });
-});
-describe("Securuty Page", () => {
-  beforeEach(async () => {
-    anotherPage = await browser.newPage();
-    await anotherPage.goto("https://github.com/features/security");
-  });
 
-  test("Text of Header Buttom", async () => {
-    const headerElement = await anotherPage.$(
-      "div.sub-nav-mktg.js-toggler-container.js-sticky.js-position-sticky.top-0.width-full.z-3 > div > a"
-    );
-    const elementText = await headerElement.evaluate((el) => el.textContent);
-    expect(elementText).toEqual("Security");
-  });
-  test("h1 Text", async () => {
-    await page.setDefaultTimeout(5000);
-    const h1 = await "h1.h1-mktg.mb-4";
-    const h1Text = await anotherPage.$eval(h1, (el) => el.textContent);
-    const h1TextAfterTransform1 = await h1Text.slice(0, 15);
-    const h1TextAfterTransform2 = await h1Text.slice(16);
-    const h1TextAfterJoin = [h1TextAfterTransform1, h1TextAfterTransform2].join(
-      ""
-    );
-    expect(h1TextAfterJoin).toEqual("Secure at everystep");
-  });
-  test("h4Span Text under h1", async () => {
-    const h4Span = await "h4 span.color-fg-default";
-    const h4SpanText = await anotherPage.$eval(h4Span, (el) => el.textContent);
-    expect(h4SpanText).toEqual(
-      "Ship secure applications within the GitHub flow"
-    );
-  });
+beforeEach(async () => {
+    page = await browser.newPage();
+    await page.setDefaultNavigationTimeout(0);
+});
+
+afterEach(() => {
+    page.close();
+});
+
+describe("Github page tests", () => {
+    beforeEach(async () => {
+        await page.goto("https://github.com/team");
+    });
+
+    test("The h1 header content'", async () => {
+        const firstLink = await page.$("header div div a");
+        await firstLink.click();
+        await page.waitForSelector('h1', {
+            timeout: 40000
+        });
+        const title2 = await page.title();
+        expect(title2).toEqual('GitHub for teams · Build like the best teams on the planet · GitHub');
+    });
+
+    test("The first link attribute", async () => {
+        const actual = await page.$eval("a", link => link.getAttribute('href', {
+            timeout: 40000
+        }));
+        expect(actual).toEqual("#start-of-content");
+    });
+
+    test("The page contains Sign in button", async () => {
+        const btnSelector = ".btn-large-mktg.btn-mktg";
+        await page.waitForSelector(btnSelector, {
+            visible: true,
+            timeout: 40000
+        });
+        const actual = await page.$eval(btnSelector, link => link.textContent);
+        expect(actual).toContain("Sign up for free");
+    });
+});
+
+describe("Github page contains tests", () => {
+    beforeEach(async () => {
+        await page.goto("https://github.com");
+    });
+    test("The h1 should contain 'enterprise'", async () => {
+        const enterpriseLink = await page.$("header nav > ul > li:nth-child(3) > a");
+        await enterpriseLink.click();
+
+        await page.waitForNavigation()
+
+        await page.waitForSelector("h1", {
+            timeout: 60000
+        });
+        const title3 = await page.title();
+        expect(title3).toEqual("Enterprise · A smarter way to work together · GitHub");
+    }, 90000);
+
+    test("The h1 should contain 'marketplace'", async () => {
+        const marketplaceLink = await page.$("nav > ul > li:nth-child(5) > a");
+        await marketplaceLink.click();
+
+        await page.waitForNavigation()
+
+        await page.waitForSelector("h1", {
+            timeout: 40000
+        });
+        const title4 = await page.title();
+        expect(title4).toEqual("GitHub Marketplace · to improve your workflow · GitHub");
+    }, 70000);
+
+    test("The h1 should contain search", async () => {
+        const searchLink = await page.$("[placeholder='Search GitHub']");
+        await searchLink.type("puppeteer");
+        await page.keyboard.press("Enter");
+        await page.waitForNavigation({
+            timeout: 40000
+        });
+        await page.waitForSelector("h2", {
+            timeout: 40000
+        });
+        const title5 = await page.title();
+        expect(title5).toEqual("Search · puppeteer · GitHub");
+    }, 40000);
 });
