@@ -1,3 +1,4 @@
+
 module.exports = {
     launch: {
         slowMo: 300,
@@ -7,4 +8,3 @@ module.exports = {
       },
     
   };
-  
