@@ -7,7 +7,7 @@
     "test": "jest",
     "cucumber": "cucumber-js"
   },
-  "author": "roman",
+  "author": "Roman",
   "license": "ISC",
   "dependencies": {
     "chai": "^4.3.4",

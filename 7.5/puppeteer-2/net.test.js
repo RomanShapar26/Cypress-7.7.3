@@ -1,6 +1,6 @@
-const { expect } = require("chai");
-const { clickElement, getText } = require("./lib/commands.js");
-const daysWeek = require("./lib/util.js");
+const { testTimeout, unregisterCustomQueryHandler } = require("puppeteer");
+const { TimeoutSettings } = require("puppeteer");
+const { clickElement, getTextFormLink, getTextFromSelector } = require("./lib/commands");
 
 let page;
 
@@ -18,7 +18,7 @@ describe("Booking tickets", () => {
         await page.goto("http://qamid.tmweb.ru/client/index.php", {
             timeout: 60000,
         });
-        await clickElement(page, daysWeek.thirdDay);
+        await clickElement(page, daysWeek);
     });
 
 
