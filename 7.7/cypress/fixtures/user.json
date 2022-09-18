@@ -1,5 +1,10 @@
 {
-    "validUserEmail": "qamid@qamid.ru",
-    "validPassword": "qamid",
-    "iNvalidUserEmail": "qamid32@qamid.ru"
+    "id": [888, 999],
+    "username": "Roman",
+    "firstName": "Roman",
+    "lastName": "Shapar",
+    "email": "romanshaparution@gmail.com",
+    "password": "mypass",
+    "phone": "myphone",
+    "userStatus": 1
   }
