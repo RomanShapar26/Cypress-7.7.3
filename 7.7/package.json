@@ -1,14 +1,17 @@
 {
-  "name": "jsaqa-live-7",
+  "name": "lesson7",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "correctSiteVeiw.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "cypress run --record --key eec90106-4ead-43fe-aa78-1179e357a5ab",
+    "cy-run": "cypress run",
+    "cy-open": "cypress open"
   },
-  "author": "",
+  "author": "Roman",
   "license": "ISC",
-  "dependencies": {
-    "cypress": "^9.0.0"
+  "devDependencies": {
+    "@4tw/cypress-drag-drop": "^2.2.1",
+    "cypress": "^10.8.0"
   }
 }
